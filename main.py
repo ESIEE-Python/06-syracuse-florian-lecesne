@@ -1,11 +1,21 @@
-#### Fonctions secondaires
-
-
+# filename : main.my
+"""
+Ce programme calcule la suite de Syracuse pour un entier donné,
+créer et affiche un graphique de cette suite,
+et calcule en parallèle le temps de vol, l'altituude maximale,
+et le temps de vol en altitude pour cette suite. 
+"""
 # imports
 from plotly.graph_objects import Scatter, Figure
 
+#### Fonctions secondaires
+
+
 ### NE PAS MODIFIER ###
 def syr_plot(lsyr):
+    """
+    Affiche un graphique des valeurs de la suite de Syracuse.
+    """
     title = "Syracuse" + " (n = " + str(lsyr[0]) + " )"
     fig = Figure({  'layout':   { 'title': {'text': title},
                                 'xaxis': {'title': {'text':"x"}},
@@ -14,12 +24,11 @@ def syr_plot(lsyr):
                 }
     )
 
-    x = [ i for i in range(len(lsyr)) ]
+    x = list(range(len(lsyr)))
     t = Scatter(x=x, y=lsyr, mode="lines+markers", marker_color = "blue")
     fig.add_trace(t)
     fig.show()
-    # fig.write_html('fig.html', include_plotlyjs='cdn')
-    return None
+
 #######################
 
 def syracuse_l(n):
@@ -29,11 +38,16 @@ def syracuse_l(n):
         n (int): la source de la suite
 
     Returns:
-        list: la suite de Syracuse de source n
+        l (list): la suite de Syracuse de source n
     """
-
-    # votre code ici 
-    l = [ ]
+    l = []
+    l.append(n)
+    while n != 1:
+        if n % 2 == 0:
+            n = n // 2
+        else:
+            n = 3 * n + 1
+        l.append(n)
     return l
 
 def temps_de_vol(l):
@@ -43,13 +57,9 @@ def temps_de_vol(l):
         l (list): la suite de Syracuse
 
     Returns:
-        int: le temps de vol
+        tv (int): le temps de vol
     """
-    
-    # votre code ici
-
-    n = 0
-    return n
+    return len(l)
 
 def temps_de_vol_en_altitude(l):
     """Retourne le temps de vol en altitude d'une suite de Syracuse
@@ -60,11 +70,15 @@ def temps_de_vol_en_altitude(l):
     Returns:
         int: le temps de vol en altitude
     """
-
-    # votre code ici
-
-    n = 0
-    return n
+    tva = 1
+    n = l[0]
+    if l[1]<l[0]:
+        return tva
+    for j in range(1, len(l)):
+        if l[j] < n:
+            return tva
+        tva += 1
+    return tva
 
 
 def altitude_maximale(l):
@@ -76,10 +90,9 @@ def altitude_maximale(l):
     Returns:
         int: l'altitude maximale
     """
-    
-    # votre code ici
-    
     n = 0
+    for elt in l:
+        n = max(n, elt)
     return n
 
 
@@ -87,9 +100,13 @@ def altitude_maximale(l):
 
 
 def main():
+    """
+    Quelques tests de bon fonctionnement.
+    """
 
     # vos appels à la fonction secondaire ici
-    lsyr = syracuse_l(15)
+    val = int(input("Entrez une valeur : "))
+    lsyr = syracuse_l(val)
     syr_plot(lsyr)
     print(temps_de_vol(lsyr))
     print(temps_de_vol_en_altitude(lsyr))
