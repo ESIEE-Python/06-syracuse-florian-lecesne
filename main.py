@@ -70,15 +70,15 @@ def temps_de_vol_en_altitude(l):
     Returns:
         int: le temps de vol en altitude
     """
-    tva = 0
+    tva = 1
     n = l[0]
     if l[1]<l[0]:
-        return 1
+        return tva
     for j in range(1, len(l)):
         if l[j] < n:
-            return tva+1
+            return tva
         tva += 1
-    return tva+1
+    return tva
 
 
 def altitude_maximale(l):
