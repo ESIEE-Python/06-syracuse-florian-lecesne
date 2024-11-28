@@ -59,12 +59,7 @@ def temps_de_vol(l):
     Returns:
         tv (int): le temps de vol
     """
-    tv = 0
-    for elt in l:
-        if elt == 1:
-            tv = l.index(elt)
-            break
-    return tv
+    return len(l)
 
 def temps_de_vol_en_altitude(l):
     """Retourne le temps de vol en altitude d'une suite de Syracuse
@@ -77,14 +72,13 @@ def temps_de_vol_en_altitude(l):
     """
     tva = 0
     n = l[0]
-    i = 1
-    while l[i] <= n and i < len(l)-1:
-        i += 1
-    for j in range(i, len(l)):
+    if l[1]<l[0]:
+        return 1
+    for j in range(1, len(l)):
         if l[j] < n:
-            break
+            return tva+1
         tva += 1
-    return tva
+    return tva+1
 
 
 def altitude_maximale(l):
